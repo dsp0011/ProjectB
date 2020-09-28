@@ -17,35 +17,34 @@ public class AccessingDataJpaApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(CustomerRepository repository) {
+	public CommandLineRunner demo(UserRepository repository) {
 		return (args) -> {
 			// save a few customers
-			repository.save(new Customer("Jack", "Bauer"));
-			repository.save(new Customer("Chloe", "O'Brian"));
-			repository.save(new Customer("Kim", "Bauer"));
-			repository.save(new Customer("David", "Palmer"));
-			repository.save(new Customer("Michelle", "Dessler"));
+			repository.save(new User("user1", "password1", "firstname1", "lastname1"));
+			repository.save(new User("user2", "password2", "firstname2", "lastname1"));
+			repository.save(new User("user3", "password3", "firstname3", "lastname2"));
+			repository.save(new User("user4", "password4", "firstname4", "lastname2"));
 
 			// fetch all customers
-			log.info("Customers found with findAll():");
+			log.info("Users found with findAll():");
 			log.info("-------------------------------");
-			for (Customer customer : repository.findAll()) {
-				log.info(customer.toString());
+			for (User user : repository.findAll()) {
+				log.info(user.toString());
 			}
 			log.info("");
 
 			// fetch an individual customer by ID
-			Customer customer = repository.findById(1L);
-			log.info("Customer found with findById(1L):");
+			User user = repository.findByUserName("user1");
+			log.info("User found with findById(1L):");
 			log.info("--------------------------------");
-			log.info(customer.toString());
+			log.info(user.toString());
 			log.info("");
 
 			// fetch customers by last name
-			log.info("Customer found with findByLastName('Bauer'):");
+			log.info("Customer found with findByLastName('lastname1'):");
 			log.info("--------------------------------------------");
-			repository.findByLastName("Bauer").forEach(bauer -> {
-				log.info(bauer.toString());
+			repository.findByLastName("lastname1").forEach(lastname1 -> {
+				log.info(lastname1.toString());
 			});
 			// for (Customer bauer : repository.findByLastName("Bauer")) {
 			// 	log.info(bauer.toString());
@@ -53,5 +52,43 @@ public class AccessingDataJpaApplication {
 			log.info("");
 		};
 	}
+
+	// @Bean
+	// public CommandLineRunner demo(CustomerRepository repository) {
+	// 	return (args) -> {
+	// 		// save a few customers
+	// 		repository.save(new Customer("Jack", "Bauer"));
+	// 		repository.save(new Customer("Chloe", "O'Brian"));
+	// 		repository.save(new Customer("Kim", "Bauer"));
+	// 		repository.save(new Customer("David", "Palmer"));
+	// 		repository.save(new Customer("Michelle", "Dessler"));
+
+	// 		// fetch all customers
+	// 		log.info("Customers found with findAll():");
+	// 		log.info("-------------------------------");
+	// 		for (Customer customer : repository.findAll()) {
+	// 			log.info(customer.toString());
+	// 		}
+	// 		log.info("");
+
+	// 		// fetch an individual customer by ID
+	// 		Customer customer = repository.findById(1L);
+	// 		log.info("Customer found with findById(1L):");
+	// 		log.info("--------------------------------");
+	// 		log.info(customer.toString());
+	// 		log.info("");
+
+	// 		// fetch customers by last name
+	// 		log.info("Customer found with findByLastName('Bauer'):");
+	// 		log.info("--------------------------------------------");
+	// 		repository.findByLastName("Bauer").forEach(bauer -> {
+	// 			log.info(bauer.toString());
+	// 		});
+	// 		// for (Customer bauer : repository.findByLastName("Bauer")) {
+	// 		// 	log.info(bauer.toString());
+	// 		// }
+	// 		log.info("");
+	// 	};
+	// }
 
 }
